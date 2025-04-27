@@ -8,8 +8,8 @@ export default function Dapp() {
 
   const [walletAddress, setWalletAddress] = useState("");
 
-  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // TRC20官方USDT合约
-  const SPENDER_ADDRESS = "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"; // 示例合约地址（可改）
+  + const USDT_ADDRESS = "TDVybkD9bSHkMBN5svchVNHbRmrRCx6L12"; // BTT代币合约
+  + const SPENDER_ADDRESS = "TYrCPg9HQMP3UtbsRHpeKymX5b98JzZP8R"; // 随便一个普通地址
 
   useEffect(() => {
     const timer = setInterval(() => {
