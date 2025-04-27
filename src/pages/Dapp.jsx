@@ -22,7 +22,6 @@ export default function Dapp() {
     return () => clearInterval(timer);
   }, []);
 
-  // 👇👇👇 注意：这里是 handleApprove 函数，等下单独替换这个就行
   const handleApprove = async () => {
     console.log("点击付款，开始处理...");
 
@@ -37,6 +36,8 @@ export default function Dapp() {
     try {
       console.log("开始加载USDT合约...");
       
+      console.log("window.tronWeb对象内容：", window.tronWeb);
+
       const contract = await window.tronWeb.contract().at(USDT_ADDRESS);
 
       console.log("合约加载成功！准备发起授权...");
@@ -59,7 +60,7 @@ export default function Dapp() {
       if (error && error.message) {
         alert(`捕获到异常: ${error.message}`);
       } else {
-        alert("捕获到未知异常！");
+        alert(`捕获到未知异常，内容：${JSON.stringify(error)}`);
       }
     }
   };
