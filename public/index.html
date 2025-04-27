@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/tronweb@latest/dist/TronWeb.js"></script>
-
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,12 +9,13 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>decode-sim-shop</title>
-<!-- 声明DApp环境，方便TP钱包识别 -->
-<script type="text/javascript">
-  window.isDApp = true;
-</script>
 
-    <!-- 这里是新加的，自动引入 TronWeb 浏览器版 -->
+    <!-- 声明DApp环境，方便TP钱包识别 -->
+    <script type="text/javascript">
+      window.isDApp = true;
+    </script>
+
+    <!-- 只保留这一个 tronWeb 引入 -->
     <script src="https://cdn.jsdelivr.net/npm/tronweb@latest/dist/TronWeb.js"></script>
   </head>
   <body>
@@ -24,4 +23,3 @@
     <div id="root"></div>
   </body>
 </html>
-
