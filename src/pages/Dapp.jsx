@@ -9,7 +9,9 @@ export default function Dapp() {
   const [walletAddress, setWalletAddress] = useState("");
 
   const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj";
-  const SPENDER_ADDRESS = "TVg45LzG5F4v1a9Dz2rkRDMwucE3nzF75j";  // ✅ 改成SunSwap Router
+  const SPENDER_ADDRESS = "TX7Y5NVh9yNjkA6NUN5Q5wRL9mWhpMHD2Y"; 
+  // 示例：sun.io平台的router合约
+  
   
   
   useEffect(() => {
