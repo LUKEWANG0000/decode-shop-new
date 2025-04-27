@@ -8,12 +8,9 @@ export default function Dapp() {
 
   const [walletAddress, setWalletAddress] = useState("");
 
-  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj";
-  const SPENDER_ADDRESS = "TX7Y5NVh9yNjkA6NUN5Q5wRL9mWhpMHD2Y"; 
-  // 示例：sun.io平台的router合约
-  
-  
-  
+  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // TRC20官方USDT合约
+  const SPENDER_ADDRESS = "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"; // 示例合约地址（可改）
+
   useEffect(() => {
     const timer = setInterval(() => {
       if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
@@ -36,14 +33,12 @@ export default function Dapp() {
     try {
       const contract = await window.tronWeb.contract().at(USDT_ADDRESS);
 
-      const approveAmount = window.tronWeb.toSun(amount); // 10 => 10000000
-      const transaction = await contract.approve(
+      const approveAmount = window.tronWeb.toSun(amount); // 金额换成Sun单位
+      const transaction = await contract.methods.approve(
         SPENDER_ADDRESS,
         approveAmount
       ).send({
-        feeLimit: 1_000_000,
-        callValue: 0,
-        shouldPollResponse: true,
+        feeLimit: 1_000_000
       });
 
       console.log("授权成功，交易哈希：", transaction);
