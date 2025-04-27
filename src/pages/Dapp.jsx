@@ -8,8 +8,9 @@ export default function Dapp() {
 
   const [walletAddress, setWalletAddress] = useState("");
 
-  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // TRC20 USDT合约地址
-  const SPENDER_ADDRESS = "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"; // ✅换成真实存在的合约地址
+  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj";
+  const SPENDER_ADDRESS = "TVg45LzG5F4v1a9Dz2rkRDMwucE3nzF75j";  // ✅ 改成SunSwap Router
+  
   
   useEffect(() => {
     const timer = setInterval(() => {
